@@ -2,14 +2,17 @@
 mod tests {
     #[test]
     fn problem_1() {
-        let answer = super::problem_1(10);
-        assert_eq!(answer, 23);
+        assert_eq!(super::problem_1(10), 23);
     }
 
     #[test]
     fn problem_2() {
-        let answer = super::problem_2(90);
-        assert_eq!(answer, 44);
+        assert_eq!(super::problem_2(90), 44);
+    }
+
+    #[test]
+    fn problem_3() {
+        assert_eq!(super::problem_3(13195), 29);
     }
 }
 
@@ -34,10 +37,55 @@ pub fn problem_2(upper: i32) -> i32 {
         if current % 2 == 0 {
             sum += current;
         }
-        
         let next = previous + current;
         previous = current;
         current = next;
     }
     return sum;
+}
+
+pub fn problem_3(input: i64) -> i64 {
+    let mut greater_than_root = 2;
+    while greater_than_root * greater_than_root < input {
+        greater_than_root += 1;
+    }
+
+    let mut primes: Vec<i64> = Vec::new();
+    primes.push(2);
+
+    for i in 3..greater_than_root {
+        add_if_prime(&mut primes, i);
+    }
+
+    let mut max = 1;
+    for p in primes {
+        if input % p == 0 {
+            max = p;
+        }
+    }
+
+    return max;
+}
+
+fn add_if_prime(primes: &mut Vec<i64>, maybe_prime: i64) {
+    let mut greater_than_root = 2;
+    while greater_than_root * greater_than_root < maybe_prime {
+        greater_than_root += 1;
+    }
+
+    let mut is_prime = false;
+
+    let primes_not_owner: &Vec<i64> = primes;
+    for p in primes_not_owner {
+        if *p >= greater_than_root {
+            is_prime = true;
+            break;
+        }
+        if maybe_prime % *p == 0 {
+            break;
+        }
+    }
+    if is_prime {
+        primes.push(maybe_prime);
+    }
 }
