@@ -23,7 +23,7 @@ pub fn problem_1(upper: i32) -> i32 {
             sum += i;
         }
     }
-    return sum;
+    sum
 }
 
 ///
@@ -41,7 +41,7 @@ pub fn problem_2(upper: i32) -> i32 {
         previous = current;
         current = next;
     }
-    return sum;
+    sum
 }
 
 pub fn problem_3(input: i64) -> i64 {
@@ -64,7 +64,7 @@ pub fn problem_3(input: i64) -> i64 {
         }
     }
 
-    return max;
+    max
 }
 
 fn add_if_prime(primes: &mut Vec<i64>, maybe_prime: i64) {
