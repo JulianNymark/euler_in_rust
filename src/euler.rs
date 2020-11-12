@@ -1,3 +1,5 @@
+use crate::utils;
+
 #[cfg(test)]
 mod tests {
     #[test]
@@ -13,6 +15,11 @@ mod tests {
     #[test]
     fn problem_3() {
         assert_eq!(super::problem_3(13195), 29);
+    }
+
+    #[test]
+    fn problem_4() {
+        assert_eq!(super::problem_4(2), 9009);
     }
 }
 
@@ -54,7 +61,7 @@ pub fn problem_3(input: i64) -> i64 {
     primes.push(2);
 
     for i in 3..greater_than_root {
-        add_if_prime(&mut primes, i);
+        utils::add_if_prime(&mut primes, i);
     }
 
     let mut max = 1;
@@ -67,25 +74,20 @@ pub fn problem_3(input: i64) -> i64 {
     max
 }
 
-fn add_if_prime(primes: &mut Vec<i64>, maybe_prime: i64) {
-    let mut greater_than_root = 2;
-    while greater_than_root * greater_than_root < maybe_prime {
-        greater_than_root += 1;
-    }
+pub fn problem_4(digits: i64) -> i64 {
+    const BASE: i64 = 10;
+    let lower = num::pow(BASE as i32, (digits - 1) as usize);
+    let upper = num::pow(BASE as i32, digits as usize);
 
-    let mut is_prime = false;
-
-    let primes_not_owner: &Vec<i64> = primes;
-    for p in primes_not_owner {
-        if *p >= greater_than_root {
-            is_prime = true;
-            break;
-        }
-        if maybe_prime % *p == 0 {
-            break;
+    let mut max: i64 = 0;
+    for i in lower..upper {
+        for j in lower..upper {
+            let product: i64 = (i * j).into();
+            if utils::is_palindrome(format!("{}", product)) && (product) as i64 > max {
+                max = product;
+            }
         }
     }
-    if is_prime {
-        primes.push(maybe_prime);
-    }
+
+    max
 }
