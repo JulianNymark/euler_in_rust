@@ -1,4 +1,8 @@
-use crate::utils;
+use std::ops::Range;
+
+use num::integer;
+
+use crate::utils::{self, generate_primes, integer_root, prime_factorize};
 
 #[cfg(test)]
 mod tests {
@@ -20,6 +24,11 @@ mod tests {
     #[test]
     fn problem_4() {
         assert_eq!(super::problem_4(2), 9009);
+    }
+
+    #[test]
+    fn problem_5() {
+        assert_eq!(super::problem_5(1..11), 2520);
     }
 }
 
@@ -52,17 +61,9 @@ pub fn problem_2(upper: i32) -> i32 {
 }
 
 pub fn problem_3(input: i64) -> i64 {
-    let mut greater_than_root = 2;
-    while greater_than_root * greater_than_root < input {
-        greater_than_root += 1;
-    }
 
-    let mut primes: Vec<i64> = Vec::new();
-    primes.push(2);
-
-    for i in 3..greater_than_root {
-        utils::add_if_prime(&mut primes, i);
-    }
+    let integer_root = integer_root(input as i32);
+    let primes: Vec<i64> = generate_primes(integer_root);
 
     let mut max = 1;
     for p in primes {
@@ -90,4 +91,24 @@ pub fn problem_4(digits: i64) -> i64 {
     }
 
     max
+}
+
+// 2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
+// What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
+pub fn problem_5(range: Range<i64>) -> i64 {
+    let integer_root = integer_root(range.end as i32);
+    let primes = generate_primes(integer_root);
+
+    let mut prime_factors: Vec<Vec<i64>> = vec![]; 
+
+    for num in range {
+        let factorization = prime_factorize(num);
+        prime_factors.push(factorization);
+    }
+
+    for factors in prime_factors {
+        // should probably use a better data structure here... like a hashmap... sad
+    }
+
+    return 42;
 }
