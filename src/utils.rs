@@ -41,10 +41,7 @@ mod tests {
 /// assumes that the root of the 'maybe_prime' is smaller than the largest
 /// prime in the primes vector
 pub fn is_prime(primes: &Vec<i64>, maybe_prime: i64) -> bool {
-    let mut greater_than_root = 2;
-    while greater_than_root * greater_than_root < maybe_prime {
-        greater_than_root += 1;
-    }
+    let greater_than_root = integer_root(maybe_prime as i32) as i64;
 
     let primes_not_owner: &Vec<i64> = primes;
     for p in primes_not_owner {
