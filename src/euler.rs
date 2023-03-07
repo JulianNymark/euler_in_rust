@@ -1,6 +1,4 @@
-use std::ops::Range;
-
-use num::integer;
+use std::{collections::HashMap, ops::Range};
 
 use crate::utils::{self, generate_primes, integer_root, prime_factorize};
 
@@ -61,7 +59,6 @@ pub fn problem_2(upper: i32) -> i32 {
 }
 
 pub fn problem_3(input: i64) -> i64 {
-
     let integer_root = integer_root(input as i32);
     let primes: Vec<i64> = generate_primes(integer_root);
 
@@ -96,19 +93,34 @@ pub fn problem_4(digits: i64) -> i64 {
 // 2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
 // What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
 pub fn problem_5(range: Range<i64>) -> i64 {
-    let integer_root = integer_root(range.end as i32);
-    let primes = generate_primes(integer_root);
-
-    let mut prime_factors: Vec<Vec<i64>> = vec![]; 
+    let mut prime_factors: Vec<Vec<i64>> = vec![];
 
     for num in range {
         let factorization = prime_factorize(num);
         prime_factors.push(factorization);
     }
 
+    let mut tally_factors: HashMap<i64, i64> = HashMap::new();
     for factors in prime_factors {
-        // should probably use a better data structure here... like a hashmap... sad
+        let mut current_tally_factors: HashMap<i64, i64> = HashMap::new();
+        for factor in factors {
+            let tally = current_tally_factors.get(&factor).unwrap_or(&0);
+            current_tally_factors.insert(factor, tally + 1);
+        }
+
+        for current_tallied_factor in current_tally_factors {
+            let existing = tally_factors.get(&current_tallied_factor.0).unwrap_or(&0);
+            if *existing < current_tallied_factor.1 {
+                tally_factors.insert(current_tallied_factor.0, current_tallied_factor.1);
+            }
+        }
     }
 
-    return 42;
+    let mut product_sum = 1;
+    for tally_factor in &tally_factors {
+        for _ in 0..*tally_factor.1 {
+            product_sum *= tally_factor.0;
+        }
+    }
+    return product_sum;
 }
