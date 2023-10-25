@@ -28,6 +28,11 @@ mod tests {
     fn problem_5() {
         assert_eq!(super::problem_5(1..11), 2520);
     }
+
+    #[test]
+    fn problem_6() {
+        assert_eq!(super::problem_6(11), 2640)
+    }
 }
 
 pub fn problem_1(upper: i32) -> i32 {
@@ -123,4 +128,17 @@ pub fn problem_5(range: Range<i64>) -> i64 {
         }
     }
     return product_sum;
+}
+
+// sum square difference
+// (a + b + c)^2 - ( a^2 + b^2 + c^2 )
+pub fn problem_6(series_count: i64) -> i64 {
+    let mut sum_squares_seq: i64 = 0;
+    let mut sum_seq_squared: i64 = 0;
+    for num in 1..series_count {
+        sum_squares_seq += num.pow(2);
+        sum_seq_squared += num;
+    }
+    sum_seq_squared = sum_seq_squared.pow(2);
+    sum_seq_squared - sum_squares_seq
 }
