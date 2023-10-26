@@ -91,11 +91,11 @@ pub fn is_palindrome(input: String) -> bool {
 
 /// the nearest integer root that's equal to or bigger than the real root of 'input'
 pub fn integer_root(input: i32) -> i32 {
-    let mut greater_than_root = 2;
-    while greater_than_root * greater_than_root < input {
-        greater_than_root += 1;
+    let mut becomes_greater_than_root = 2;
+    while becomes_greater_than_root * becomes_greater_than_root < input {
+        becomes_greater_than_root += 1;
     }
-    greater_than_root
+    becomes_greater_than_root
 }
 
 pub fn prime_factorize(input: i64) -> Vec<i64> {
