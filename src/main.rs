@@ -7,5 +7,6 @@ fn main() {
     println!("problem 3: {}", euler::problem_3(600851475143));
     println!("problem 4: {}", euler::problem_4(3));
     println!("problem 5: {}", euler::problem_5(1..21));
-    println!("problem 6: {}", euler::problem_6(101))
+    println!("problem 6: {}", euler::problem_6(101));
+    println!("problem 7: {}", euler::problem_7(10_001))
 }

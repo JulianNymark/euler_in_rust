@@ -33,6 +33,11 @@ mod tests {
     fn problem_6() {
         assert_eq!(super::problem_6(11), 2640)
     }
+
+    #[test]
+    fn problem_7() {
+        assert_eq!(super::problem_7(6), 13)
+    }
 }
 
 pub fn problem_1(upper: i32) -> i32 {
@@ -141,4 +146,10 @@ pub fn problem_6(series_count: i64) -> i64 {
     }
     sum_seq_squared = sum_seq_squared.pow(2);
     sum_seq_squared - sum_squares_seq
+}
+
+
+pub fn problem_7(nth_prime: i32) -> i64 {
+    let primes: Vec<i64> = generate_primes(nth_prime);
+    primes[primes.len()-1]
 }
